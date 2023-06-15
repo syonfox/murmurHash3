@@ -54,7 +54,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request or Publish to npm
+      - id: changesets
+        name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
           publish: pnpm release
@@ -63,11 +64,13 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push git tags
+        if: steps.changesets.outputs.published == 'true'
         run: git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload coverage reports to Codecov
+        if: steps.changesets.outputs.published == 'true'
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
