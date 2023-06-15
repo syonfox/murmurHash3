@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.2
+
+### Patch Changes
+
+- 1b27cc6: fix pnpm lockfile version to match github release workflow
+
 ## 0.1.1
 
 ### Patch Changes

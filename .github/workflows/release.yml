@@ -7,10 +7,6 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - '.changeset/*.md'
-    # tags-ignore:
-    #   - '**'
 
 permissions:
   actions: read
@@ -45,7 +41,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.5.1
+          version: 8.6.2
           run_install: false
 
       - name: Setup Node.js 18
