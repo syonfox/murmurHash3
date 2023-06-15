@@ -1,16 +1,11 @@
 # MurmurHash3.ts
 
+![Codecov](https://img.shields.io/codecov/c/github/reemus-dev/MurmurHash3.ts?style=for-the-badge)
 ![NPM](https://img.shields.io/npm/l/murmurhash3.ts?style=for-the-badge)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reemus-dev/MurmurHash3.ts/release.yml?style=for-the-badge)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/murmurhash3.ts?style=for-the-badge)
 ![npm](https://img.shields.io/npm/v/murmurhash3.ts?style=for-the-badge)
 ![npm type definitions](https://img.shields.io/npm/types/murmurhash3.ts?style=for-the-badge)
-
-[![NPM Package](https://img.shields.io/npm/v/murmurHash3.js?style=for-the-badge)](https://www.npmjs.com/package/murmurhash3.js)
-[![MIT License](https://img.shields.io/github/license/karanlyons/murmurHash3.js?style=for-the-badge)](https://github.com/karanlyons/murmurHash3.js/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/com/karanlyons/murmurHash3.js?style=for-the-badge)](https://travis-ci.com/karanlyons/murmurHash3.js)
-[![Coverage Status](https://img.shields.io/coveralls/github/karanlyons/murmurHash3.js?style=for-the-badge)](https://coveralls.io/github/karanlyons/murmurHash3.js)
-
 
 ## Usage
 
