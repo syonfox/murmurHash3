@@ -1,6 +1,6 @@
 {
   "name": "murmurhash3.ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
@@ -19,11 +19,15 @@
     "email": "tarun@reemus.dev"
   },
   "type": "module",
-  "main": "dist/index.js",
+  "main": "./dist/esm/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
   ],
+  "exports": {
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js"
+  },
   "scripts": {
     "build": "pnpm clean && pnpm build:esm && pnpm build:cjs",
     "build:cjs": "tsc -p tsconfig.cjs.json",
