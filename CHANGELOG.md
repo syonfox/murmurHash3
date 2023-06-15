@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.6
+
+### Patch Changes
+
+- 7db7019: test
+
 ## 0.1.5
 
 ### Patch Changes
