@@ -1,0 +1,98 @@
+name: Release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+    # paths:
+    #   - '.changeset/*.md'
+    # tags-ignore:
+    #   - '**'
+
+permissions:
+  actions: read
+  checks: write
+  contents: write
+  deployments: none
+  id-token: none
+  issues: write
+  discussions: none
+  packages: none
+  pages: none
+  pull-requests: write
+  repository-projects: none
+  security-events: none
+  statuses: write
+
+jobs:
+  release:
+    if: github.repository == 'reemus-dev/contly'
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate
+          # changelogs with the correct commits
+          fetch-depth: 0
+
+      - id: install-pnpm
+        uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8.5.1
+          run_install: false
+
+      - id: install-node
+        name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          cache: "pnpm"
+          cache-dependency-path: "pnpm-lock.yaml"
+          node-version: 18
+
+      - id: install
+        name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - id: build
+        name: Build packages
+        run: pnpm pkgs:build
+
+      - id: changesets
+        name: Create release pull request or publish to npm
+        uses: changesets/action@v1
+        with:
+          publish: pnpm pkgs:publish
+          # publish: pnpm pkgs:publish --publish-branch changeset-release/main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - id: merge
+        name: Merge pull request
+        uses: actions/github-script@v6
+        if: steps.changesets.outputs.pullRequestNumber > 0
+        with:
+          github-token: ${{ secrets.GH_TARUN_PAT }}
+          script: |
+            const owner = "reemus-dev";
+            const repo = "contly";
+            const head = "changeset-release/main";
+            const pull_number = "${{ steps.changesets.outputs.pullRequestNumber }}"
+            await github.rest.pulls.merge({ owner, repo, pull_number });
+
+      # - id: publish
+      #   name: Publish to npm
+      #   uses: changesets/action@v1
+      #   if: steps.changesets.outputs.pullRequestNumber > 0
+      #   with:
+      #     publish: pnpm pkgs:publish --publish-branch changeset-release/main
+      #     createGithubReleases: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
