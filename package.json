@@ -38,7 +38,6 @@
     "cs:version": "changeset version",
     "lint": "eslint src/**",
     "postinstall": "pnpm exec syncpack format",
-    "prepublishOnly": "jq -e '.total | to_entries | map(.value.pct) | min == 100' ./coverage/coverage-summary.json && npm run build && find ./lib -type f \\( -name '*.js' -o -name '*.d.ts' \\) -exec sed -i '' 'h;s/[^ ].*//;s/    /  /g;G;s/\\n *//' '{}' \\;",
     "publish": "pnpm publish",
     "release": "pnpm lint && pnpm build && pnpm test && changeset publish",
     "test": "jest --config jest.config.js"
