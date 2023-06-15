@@ -1,5 +1,10 @@
-# MurmurHash3.js - [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp), in JavaScript.
+# MurmurHash3.ts
 
+![NPM](https://img.shields.io/npm/l/murmurhash3.ts?style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reemus-dev/MurmurHash3.ts/release.yml?style=for-the-badge)
+![npm bundle size](https://img.shields.io/bundlephobia/min/murmurhash3.ts?style=for-the-badge)
+![npm](https://img.shields.io/npm/v/murmurhash3.ts?style=for-the-badge)
+![npm type definitions](https://img.shields.io/npm/types/murmurhash3.ts?style=for-the-badge)
 
 [![NPM Package](https://img.shields.io/npm/v/murmurHash3.js?style=for-the-badge)](https://www.npmjs.com/package/murmurhash3.js)
 [![MIT License](https://img.shields.io/github/license/karanlyons/murmurHash3.js?style=for-the-badge)](https://github.com/karanlyons/murmurHash3.js/blob/master/LICENSE)
@@ -47,27 +52,54 @@
 
 ```javascript
 murmurHash3 = {
-  strToBuf: (str: string = ""): Uint8Array,
-  bufToHex: (buf: Uint8Array = new Uint8Array(0)): string,
-  x86: {
-    hash32: (
-      buf: Uint8Array | string = new Uint8Array(0),
-      state: u32 | x86hash32State = 0x0,
-      finalize: boolean = true,
-    ): u32 | x86hash32State,
-    hash128: (
-      buf: Uint8Array | string = new Uint8Array(0),
-      state: u32 | x86hash128State = 0x0,
-      finalize: boolean = true
-    ): Uint8Array | string | x86hash128State,
-  },
-  x64: {
-    hash128: (
-      buf: Uint8Array | string = new Uint8Array(0),
-      state: u32 | x64hash128State = 0x0,
-      finalize: boolean = true
-    ): Uint8Array| string | x64hash128State,
-  },
+  strToBuf: (str: string = ""
+):
+Uint8Array,
+  bufToHex
+:
+(buf: Uint8Array = new Uint8Array(0)
+):
+string,
+  x86
+:
+{
+  hash32: (
+    buf: Uint8Array | string = new Uint8Array(0),
+    state
+:
+  U32 | X86Hash32State = 0x0,
+    finalize
+:
+  boolean = true,
+):
+  U32 | X86Hash32State,
+    hash128
+:
+  (
+    buf: Uint8Array | string = new Uint8Array(0),
+    state
+:
+  U32 | X86Hash128State = 0x0,
+    finalize
+:
+  boolean = true
+):
+  Uint8Array | string | X86Hash128State,
+}
+,
+x64: {
+  hash128: (
+    buf: Uint8Array | string = new Uint8Array(0),
+    state
+:
+  U32 | X64Hash128State = 0x0,
+    finalize
+:
+  boolean = true
+):
+  Uint8Array | string | X64Hash128State,
+}
+,
 }
 ```
 

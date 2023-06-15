@@ -5,17 +5,9 @@ module.exports = {
   useTabs: false,
   bracketSpacing: false,
   plugins: [
-    require("prettier-plugin-tailwindcss"),
     require("@trivago/prettier-plugin-sort-imports"),
   ],
-  // https://github.com/trivago/prettier-plugin-sort-imports
   importOrder: [
-    "(.*).css$",
-    "^react",
-    "^react/(.*)$",
-    "^next",
-    "^next/(.*)$",
-    "^next/(.*)$",
     "^[a-zA-Z0-9]",
     "^@(.*)$",
     "^(?!\\.)(?!src\\?)(?!@)(.*)$",
@@ -25,5 +17,4 @@ module.exports = {
   ],
   importOrderSeparation: false,
   importOrderSortSpecifiers: true,
-  // importOrderGroupNamespaceSpecifiers: true,
 };

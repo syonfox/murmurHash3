@@ -1,36 +1,32 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "moduleResolution": "node",
-
-    "rootDir": "src",
-    "outDir": "lib",
-
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["ES2015"],
+    "module": "ES2015",
+    "moduleResolution": "NodeNext",
     "newLine": "LF",
-
-    "strict": true,
+    "noEmitOnError": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-
-    "noEmitOnError": false,
-
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2015",
+    "useUnknownInCatchVariables": false
   },
-  "include": [
-      "src/**/*"
-  ],
-  "exclude": [
-    "**/__tests__/**/*"
-  ]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,13 +1,13 @@
+/// <reference types="@types/jest" />
 import {
+  U32,
+  X64Hash128State,
+  X86Hash32State,
+  X86Hash128State,
   bufToHex,
+  murmurhash,
   strToBuf,
-  u32,
-  x64,
-  x64hash128State,
-  x86,
-  x86hash32State,
-  x86hash128State,
-} from "../index";
+} from "../src/index.ts";
 
 const ascendingBuf =
   // tslint:disable-next-line: prefer-template
@@ -20,7 +20,7 @@ const ascendingBuf =
   "\x30\x31\x32\x33\x34\x35\x36\x37" +
   "\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f";
 
-const testVectors: Record<string, [u32, string, string]> = {
+const testVectors: Record<string, [U32, string, string]> = {
   "": [0, "00000000000000000000000000000000", "00000000000000000000000000000000"],
   [ascendingBuf]: [
     2303633163,
@@ -89,7 +89,7 @@ function chunk(data: string | Uint8Array, size: number): string[] | Uint8Array[]
   }
 }
 
-const testVectorsx86hash32: Record<string, u32> = {};
+const testVectorsx86hash32: Record<string, U32> = {};
 const testVectorsx86hash128str: Record<string, string> = {};
 const testVectorsx86hash128buf: Record<string, Uint8Array> = {};
 const testVectorsx64hash128str: Record<string, string> = {};
@@ -127,11 +127,11 @@ describe.each(
   });
 });
 
-describe.each(Object.entries(testVectorsx86hash32).map(([k, v]) => [k, v] as [string, u32]))(
+describe.each(Object.entries(testVectorsx86hash32).map(([k, v]) => [k, v] as [string, U32]))(
   "x86.hash32(%j)",
   (str, expected) => {
     test(`returns ${expected}`, () => {
-      expect(x86.hash32(str)).toBe(expected);
+      expect(murmurhash.x86.hash32(str)).toBe(expected);
     });
   }
 );
@@ -140,7 +140,7 @@ describe.each(Object.entries(testVectorsx86hash128str).map(([k, v]) => [k, v]))(
   "x86.hash128(%j)",
   (str, expected) => {
     test(`returns '${expected}'`, () => {
-      expect(x86.hash128(str)).toBe(expected);
+      expect(murmurhash.x86.hash128(str)).toBe(expected);
     });
   }
 );
@@ -149,7 +149,7 @@ describe.each(Object.entries(testVectorsx86hash128buf).map(([k, v]) => [strToBuf
   "x86.hash128(Uint8Array %p)",
   (buf, expected) => {
     test(`returns Uint8Array [${expected.join(", ")}]`, () => {
-      expect(x86.hash128(buf)).toEqual(expected);
+      expect(murmurhash.x86.hash128(buf)).toEqual(expected);
     });
   }
 );
@@ -158,7 +158,7 @@ describe.each(Object.entries(testVectorsx64hash128str).map(([k, v]) => [k, v]))(
   "x64.hash128(%j)",
   (str, expected) => {
     test(`returns '${expected}'`, () => {
-      expect(x64.hash128(str)).toBe(expected);
+      expect(murmurhash.x64.hash128(str)).toBe(expected);
     });
   }
 );
@@ -167,7 +167,7 @@ describe.each(Object.entries(testVectorsx64hash128buf).map(([k, v]) => [strToBuf
   "x64.hash128(Uint8Array %p)",
   (buf, expected) => {
     test(`returns Uint8Array [${expected.join(", ")}]`, () => {
-      expect(x64.hash128(buf)).toEqual(expected);
+      expect(murmurhash.x64.hash128(buf)).toEqual(expected);
     });
   }
 );
@@ -178,7 +178,7 @@ describe.each(
     .flatMap(([k, v]) =>
       Array.from(
         {length: Math.max(1, k.length - 1)},
-        (_, i) => [k, i + 1, chunk(k, i + 1), v] as [string, number, string[], u32]
+        (_, i) => [k, i + 1, chunk(k, i + 1), v] as [string, number, string[], U32]
       )
     )
 )(
@@ -186,13 +186,13 @@ describe.each(
   // tslint:disable-next-line: variable-name
   (_k, _size, chunks, expected) => {
     test(`returns ${expected}`, () => {
-      let state: u32 | x86hash32State = 0x0;
+      let state: U32 | X86Hash32State = 0x0;
       for (const chunk of chunks) {
-        state = x86.hash32(chunk, state, false);
+        state = murmurhash.x86.hash32(chunk, state, false);
       }
 
-      expect(x86.hash32(undefined, state, true)).toBe(expected);
-      expect(x86.hash32("", state, true)).toBe(expected);
+      expect(murmurhash.x86.hash32(undefined, state, true)).toBe(expected);
+      expect(murmurhash.x86.hash32("", state, true)).toBe(expected);
     });
   }
 );
@@ -211,12 +211,12 @@ describe.each(
   // tslint:disable-next-line: variable-name
   (_k, _size, chunks, expected) => {
     test(`returns '${expected}'`, () => {
-      let state: u32 | x86hash128State = 0x0;
+      let state: U32 | X86Hash128State = 0x0;
       for (const chunk of chunks) {
-        state = x86.hash128(chunk, state, false);
+        state = murmurhash.x86.hash128(chunk, state, false);
       }
 
-      expect(x86.hash128("", state, true)).toBe(expected);
+      expect(murmurhash.x86.hash128("", state, true)).toBe(expected);
     });
   }
 );
@@ -235,12 +235,12 @@ describe.each(
   // tslint:disable-next-line: variable-name
   (_k, _size, chunks, expected) => {
     test(`returns Uint8Array [${expected.join(", ")}]`, () => {
-      let state: u32 | x86hash128State = 0x0;
+      let state: U32 | X86Hash128State = 0x0;
       for (const chunk of chunks) {
-        state = x86.hash128(chunk, state, false);
+        state = murmurhash.x86.hash128(chunk, state, false);
       }
 
-      expect(x86.hash128(undefined, state, true)).toEqual(expected);
+      expect(murmurhash.x86.hash128(undefined, state, true)).toEqual(expected);
     });
   }
 );
@@ -259,12 +259,12 @@ describe.each(
   // tslint:disable-next-line: variable-name
   (_jsonStr, _size, chunks, expected) => {
     test(`returns '${expected}'`, () => {
-      let state: u32 | x64hash128State = 0x0;
+      let state: U32 | X64Hash128State = 0x0;
       for (const chunk of chunks) {
-        state = x64.hash128(chunk, state, false);
+        state = murmurhash.x64.hash128(chunk, state, false);
       }
 
-      expect(x64.hash128("", state, true)).toBe(expected);
+      expect(murmurhash.x64.hash128("", state, true)).toBe(expected);
     });
   }
 );
@@ -283,12 +283,12 @@ describe.each(
   // tslint:disable-next-line: variable-name
   (_jsonStr, _size, chunks, expected) => {
     test(`returns Uint8Array [${expected.join(", ")}]`, () => {
-      let state: u32 | x64hash128State = 0x0;
+      let state: U32 | X64Hash128State = 0x0;
       for (const chunk of chunks) {
-        state = x64.hash128(chunk, state, false);
+        state = murmurhash.x64.hash128(chunk, state, false);
       }
 
-      expect(x64.hash128(undefined, state, true)).toEqual(expected);
+      expect(murmurhash.x64.hash128(undefined, state, true)).toEqual(expected);
     });
   }
 );

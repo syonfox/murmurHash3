@@ -29,7 +29,6 @@ permissions:
 
 jobs:
   release:
-    if: github.repository == 'reemus-dev/contly'
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -40,59 +39,34 @@ jobs:
           # changelogs with the correct commits
           fetch-depth: 0
 
-      - id: install-pnpm
+      - name: Setup npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: Install pnpm
         uses: pnpm/action-setup@v2
-        name: Install pnpm
         with:
           version: 8.5.1
           run_install: false
 
-      - id: install-node
-        name: Setup Node.js 18
+      - name: Setup Node.js 18
         uses: actions/setup-node@v3
         with:
           cache: "pnpm"
           cache-dependency-path: "pnpm-lock.yaml"
           node-version: 18
 
-      - id: install
-        name: Install dependencies
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - id: build
-        name: Build packages
-        run: pnpm pkgs:build
-
-      - id: changesets
-        name: Create release pull request or publish to npm
+      - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
-          publish: pnpm pkgs:publish
-          # publish: pnpm pkgs:publish --publish-branch changeset-release/main
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - id: merge
-        name: Merge pull request
-        uses: actions/github-script@v6
-        if: steps.changesets.outputs.pullRequestNumber > 0
-        with:
-          github-token: ${{ secrets.GH_TARUN_PAT }}
-          script: |
-            const owner = "reemus-dev";
-            const repo = "contly";
-            const head = "changeset-release/main";
-            const pull_number = "${{ steps.changesets.outputs.pullRequestNumber }}"
-            await github.rest.pulls.merge({ owner, repo, pull_number });
-
-      # - id: publish
-      #   name: Publish to npm
-      #   uses: changesets/action@v1
-      #   if: steps.changesets.outputs.pullRequestNumber > 0
-      #   with:
-      #     publish: pnpm pkgs:publish --publish-branch changeset-release/main
-      #     createGithubReleases: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
