@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.3
+
+### Patch Changes
+
+- 43de63a: fix build process
+
 ## 0.1.2
 
 ### Patch Changes
