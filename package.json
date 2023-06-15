@@ -11,9 +11,9 @@
     "progressive"
   ],
   "license": "MIT",
-  "repository": "github:reemus-dev/MurmurHash3.js",
-  "homepage": "https://github.com/reemus-dev/MurmurHash3.js",
-  "bugs": "https://github.com/reemus-dev/MurmurHash3.js/issues",
+  "repository": "github:reemus-dev/MurmurHash3.ts",
+  "homepage": "https://github.com/reemus-dev/MurmurHash3.ts",
+  "bugs": "https://github.com/reemus-dev/MurmurHash3.ts/issues",
   "author": {
     "name": "Tarun Ramesh",
     "email": "tarun@reemus.dev"
@@ -41,7 +41,7 @@
     "cs:version": "changeset version",
     "lint": "eslint src/**",
     "postinstall": "pnpm exec syncpack format",
-    "publish": "pnpm publish --access public",
+    "publish": "pnpm publish",
     "release": "pnpm lint && pnpm build && pnpm test && changeset publish",
     "test": "jest --config jest.config.js"
   },
