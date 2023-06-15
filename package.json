@@ -1,6 +1,6 @@
 {
   "name": "murmurhash3.ts",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
@@ -20,7 +20,7 @@
   },
   "type": "module",
   "main": "./dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
   "files": [
     "dist/**/*"
   ],

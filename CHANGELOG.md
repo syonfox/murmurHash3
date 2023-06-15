@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.7
+
+### Patch Changes
+
+- 697694a: fix package types
+
 ## 0.1.6
 
 ### Patch Changes
