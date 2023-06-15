@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.4
+
+### Patch Changes
+
+- 3ef8004: test tags and workflow
+
 ## 0.1.3
 
 ### Patch Changes
