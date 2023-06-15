@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.5
+
+### Patch Changes
+
+- b06069f: test2
+
 ## 0.1.4
 
 ### Patch Changes

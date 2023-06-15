@@ -1,6 +1,6 @@
 {
   "name": "murmurhash3.ts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
