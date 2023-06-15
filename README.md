@@ -1,10 +1,11 @@
 # MurmurHash3.ts
 
-![Codecov](https://img.shields.io/codecov/c/github/reemus-dev/MurmurHash3.ts?style=for-the-badge)
 ![License](https://img.shields.io/github/license/reemus-dev/MurmurHash3.ts?style=for-the-badge)
+![Codecov](https://img.shields.io/codecov/c/github/reemus-dev/MurmurHash3.ts?style=for-the-badge)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reemus-dev/MurmurHash3.ts/release.yml?style=for-the-badge)
-![NPM Bundle Size](https://img.shields.io/bundlephobia/min/murmurhash3.ts?style=for-the-badge)
+
 ![NPM Version](https://img.shields.io/npm/v/murmurhash3.ts?style=for-the-badge)
+![NPM Bundle Size](https://img.shields.io/bundlephobia/min/murmurhash3.ts?style=for-the-badge)
 ![Type Definitions](https://img.shields.io/npm/types/murmurhash3.ts?style=for-the-badge)
 
 ## Usage
