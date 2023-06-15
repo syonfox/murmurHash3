@@ -28,6 +28,9 @@
     "require": "./dist/cjs/index.js",
     "import": "./dist/esm/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm clean && pnpm build:esm && pnpm build:cjs",
     "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -97,6 +100,7 @@
       "files",
       "exports",
       "bin",
+      "publishConfig",
       "scripts",
       "dependencies",
       "devDependencies",
