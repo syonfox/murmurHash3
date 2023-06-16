@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.10
+
+### Patch Changes
+
+- 897a218: fix postinstall script
+
 ## 0.1.9
 
 ### Patch Changes
