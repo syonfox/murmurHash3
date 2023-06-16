@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.8
+
+### Patch Changes
+
+- c633659: rename package and properly export support for esm and cjs
+
 ## 0.1.7
 
 ### Patch Changes

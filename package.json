@@ -1,6 +1,6 @@
 {
-  "name": "murmurhash3.ts",
-  "version": "0.1.7",
+  "name": "murmurhash3-ts",
+  "version": "0.1.8",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
@@ -25,15 +25,15 @@
     "dist/**/*"
   ],
   "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.js"
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:esm && pnpm build:cjs",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' | tee ./dist/cjs/package.json > /dev/null",
     "build:esm": "tsc -p tsconfig.esm.json",
     "clean": "rm -rf ./dist ./coverage",
     "coveralls": "jest --config jestconfig.json --silent --coverage --coverageReporters=text-lcov | coveralls",
