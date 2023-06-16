@@ -11,9 +11,9 @@
     "progressive"
   ],
   "license": "MIT",
-  "repository": "github:reemus-dev/MurmurHash3.ts",
-  "homepage": "https://github.com/reemus-dev/MurmurHash3.ts",
-  "bugs": "https://github.com/reemus-dev/MurmurHash3.ts/issues",
+  "repository": "github:reemus-dev/murmurhash3-ts",
+  "homepage": "https://github.com/reemus-dev/murmurhash3-ts",
+  "bugs": "https://github.com/reemus-dev/murmurhash3-ts/issues",
   "author": {
     "name": "Tarun Ramesh",
     "email": "tarun@reemus.dev"

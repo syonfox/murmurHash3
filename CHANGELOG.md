@@ -1,4 +1,4 @@
-# murmurhash3.ts
+# murmurhash3-ts
 
 ## 0.1.11
 

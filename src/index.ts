@@ -1,6 +1,6 @@
 /*!
  * +----------------------------------------------------------------------------------+
- * | MurmurHash3.ts (https://github.com/reemus-dev/MurmurHash3.ts)                    |
+ * | murmurhash3-ts (https://github.com/reemus-dev/murmurhash3-ts)                    |
  * | A TypeScript implementation of MurmurHash3's hashing algorithms.                 |
  * | Forked from https://github.com/karanlyons/murmurHash3.js/                        |
  * |----------------------------------------------------------------------------------|
