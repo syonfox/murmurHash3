@@ -1,6 +1,6 @@
 {
   "name": "murmurhash3-ts",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
@@ -40,7 +40,7 @@
     "cs:add": "changeset add",
     "cs:version": "changeset version",
     "lint": "eslint src/**",
-    "postinstall": "[ \"$NODE_ENV\" = \"production\" ] && exit 0; syncpack format",
+    "postinstall": "[ \"$CI\" = \"1\" ] && exit 0; syncpack format",
     "release": "pnpm lint && pnpm build && pnpm test && changeset publish",
     "test": "jest --config jest.config.js"
   },

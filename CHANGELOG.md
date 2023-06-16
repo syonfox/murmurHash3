@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.11
+
+### Patch Changes
+
+- 3faec8b: fix postinstall during CI
+
 ## 0.1.10
 
 ### Patch Changes
