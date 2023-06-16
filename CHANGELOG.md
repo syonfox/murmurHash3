@@ -1,5 +1,11 @@
 # murmurhash3.ts
 
+## 0.1.9
+
+### Patch Changes
+
+- eb9675d: fix package.json postinstall
+
 ## 0.1.8
 
 ### Patch Changes
