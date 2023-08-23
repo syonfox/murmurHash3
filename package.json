@@ -1,44 +1,117 @@
 {
-  "name": "murmurhash3.js",
-  "version": "3.0.0",
-  "description": "MurmurHash3, in JavaScript.",
-  "license": "MIT",
-  "homepage": "https://github.com/karanlyons/murmurHash3.js",
-  "author": {
-    "name": "Karan Lyons",
-    "email": "karan@karanlyons.com"
-  },
-  "repository": "github:karanlyons/murmurHash3.js",
-  "bugs": "https://github.com/karanlyons/murmurHash3.js/issues",
+  "name": "murmurhash3-ts",
+  "version": "0.1.11",
+  "description": "MurmurHash3 in TypeScript",
   "keywords": [
-    "murmurhash",
-    "murmmurhash3",
     "hash",
     "hashing",
-    "progressive",
-    "incremental"
+    "incremental",
+    "murmmurhash3",
+    "murmurhash",
+    "progressive"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "repository": "github:reemus-dev/murmurhash3-ts",
+  "homepage": "https://github.com/reemus-dev/murmurhash3-ts",
+  "bugs": "https://github.com/reemus-dev/murmurhash3-ts/issues",
+  "author": {
+    "name": "Tarun Ramesh",
+    "email": "tarun@reemus.dev"
+  },
+  "type": "module",
+  "main": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "clean": "rm -rf ./lib ./coverage",
-    "lint": "tslint --project tsconfig.json --format stylish",
-    "test": "jest --config jestconfig.json --coverage",
-    "build": "tsc",
-    "travis": "jest --config jestconfig.json",
+    "build": "pnpm clean && pnpm build:esm && pnpm build:cjs",
+    "build:cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' | tee ./dist/cjs/package.json > /dev/null",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "clean": "rm -rf ./dist ./coverage",
     "coveralls": "jest --config jestconfig.json --silent --coverage --coverageReporters=text-lcov | coveralls",
-    "prepublishOnly": "npm run clean && npm run lint && npm run test && jq -e '.total | to_entries | map(.value.pct) | min == 100' ./coverage/coverage-summary.json && npm run build && find ./lib -type f \\( -name '*.js' -o -name '*.d.ts' \\) -exec sed -i '' 'h;s/[^ ].*//;s/    /  /g;G;s/\\n *//' '{}' \\;"
+    "cs:add": "changeset add",
+    "cs:version": "changeset version",
+    "lint": "eslint src/**",
+    "postinstall": "[ \"$CI\" = \"1\" ] && exit 0; syncpack format",
+    "release": "pnpm lint && pnpm build && pnpm test && changeset publish",
+    "test": "jest --config jest.config.js"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "coveralls": "^3.0.9",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.2.0",
-    "tslint": "^5.20.1",
-    "tslint-config-airbnb": "^5.11.2",
-    "typescript": "^3.7.4"
+    "@changesets/cli": "2.26.1",
+    "@trivago/prettier-plugin-sort-imports": "4.1.1",
+    "@tsconfig/recommended": "1.0.2",
+    "@types/jest": "29.5.2",
+    "@types/node": "20.3.1",
+    "@typescript-eslint/eslint-plugin": "5.59.11",
+    "@typescript-eslint/parser": "5.59.11",
+    "concurrently": "8.2.0",
+    "coveralls": "3.1.1",
+    "eslint": "8.42.0",
+    "eslint-config-prettier": "8.8.0",
+    "jest": "29.5.0",
+    "prettier": "2.8.8",
+    "syncpack": "10.5.1",
+    "ts-jest": "29.1.0",
+    "typescript": "5.1.3"
   },
-  "files": [
-    "lib/**/*"
-  ]
+  "syncpack": {
+    "dev": true,
+    "filter": ".",
+    "indent": "  ",
+    "overrides": true,
+    "peer": true,
+    "prod": true,
+    "resolutions": true,
+    "semverGroups": [],
+    "semverRange": "",
+    "sortAz": [
+      "scripts",
+      "contributors",
+      "dependencies",
+      "devDependencies",
+      "keywords",
+      "peerDependencies"
+    ],
+    "sortFirst": [
+      "name",
+      "version",
+      "private",
+      "description",
+      "keywords",
+      "license",
+      "repository",
+      "homepage",
+      "bugs",
+      "author",
+      "sideEffects",
+      "type",
+      "main",
+      "module",
+      "types",
+      "files",
+      "exports",
+      "bin",
+      "publishConfig",
+      "scripts",
+      "dependencies",
+      "devDependencies",
+      "prettier",
+      "xo",
+      "eslintConfig",
+      "syncpack"
+    ],
+    "source": [
+      "package.json",
+      "packages/*/package.json",
+      "tests/*/package.json"
+    ]
+  }
 }
