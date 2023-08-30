@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "co": "^4.6.0",
+    "lodash.memoize": "^4.1.2"
+  },
+  "name": "endpoint-murmur",
+  "description": "**A javascript implementation of [MurmurHash3](http://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp?spec=svn145&r=144)'s hashing algorithms.**",
+  "version": "0.0.1",
+  "main": "murmurHash3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syonfox/murmurHash3.git"
+  },
+  "keywords": [
+    "murmur",
+    "vanilla",
+    "js",
+    "hash",
+    "function",
+    "fast",
+    "random",
+    "sigma"
+  ],
+  "author": "syonfox, (thanks Karan Lyons)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/syonfox/murmurHash3/issues"
+  },
+  "homepage": "https://github.com/syonfox/murmurHash3#readme"
+}
