@@ -1,12 +1,12 @@
 'use strict'
 
-//A promis is es6 way of handling async code
-// a wrap is a wraper fungtion to make some change
-// a genorator is a special js function that can be paused and continues it yeald a next a value rather then running
+//A promise is es6 way of handling async code
+// a wrap is a wrapper function to make some change
+// a generator is a special js function that can be paused and continues it yield a next a value rather then running
 const promiseWrapGenerator = require('co').wrap;
 
 //Memoize  as an optimization for caching a functions results.
-//if a small set of paramaters are used and computation is a proper strict function of inputs only then this is great
+//if a small set of parameters are used and computation is a proper strict function of inputs only then this is great
 const memoize = require('lodash.memoize')
 
 
