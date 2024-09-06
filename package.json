@@ -1,6 +1,6 @@
 {
-  "name": "murmurhash3-ts",
-  "version": "0.1.11",
+  "name": "endpoint-murmurhash3",
+  "version": "0.1.12",
   "description": "MurmurHash3 in TypeScript",
   "keywords": [
     "hash",
@@ -8,12 +8,15 @@
     "incremental",
     "murmmurhash3",
     "murmurhash",
-    "progressive"
+    "progressive",
+    "64bit",
+    "128bit",
+    "anti-collision"
   ],
   "license": "MIT",
   "repository": "github:reemus-dev/murmurhash3-ts",
-  "homepage": "https://github.com/reemus-dev/murmurhash3-ts",
-  "bugs": "https://github.com/reemus-dev/murmurhash3-ts/issues",
+  "homepage": "https://github.com/syonfox/murmurHash3",
+  "bugs": "https://github.com/reemus-dev/murmurHash3/issues",
   "author": {
     "name": "Tarun Ramesh",
     "email": "tarun@reemus.dev"

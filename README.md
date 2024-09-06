@@ -1,12 +1,14 @@
 # MurmurHash3 (TS)
 
-![License](https://img.shields.io/github/license/reemus-dev/murmurhash3-ts?style=for-the-badge)
-![Codecov](https://img.shields.io/codecov/c/github/reemus-dev/murmurhash3-ts?style=for-the-badge)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reemus-dev/murmurhash3-ts/release.yml?style=for-the-badge)
+[//]: # (![License]&#40;https://img.shields.io/github/license/reemus-dev/murmurhash3-ts?style=for-the-badge&#41;)
 
-![NPM Version](https://img.shields.io/npm/v/murmurhash3-ts?style=for-the-badge)
-![NPM Bundle Size](https://img.shields.io/bundlephobia/minzip/murmurhash3-ts?style=for-the-badge)
-![Type Definitions](https://img.shields.io/npm/types/murmurhash3-ts?style=for-the-badge)
+[//]: # (![Codecov]&#40;https://img.shields.io/codecov/c/github/reemus-dev/murmurhash3-ts?style=for-the-badge&#41;)
+
+[//]: # (![GitHub Workflow Status]&#40;https://img.shields.io/github/actions/workflow/status/reemus-dev/murmurhash3-ts/release.yml?style=for-the-badge&#41;)
+
+![NPM Version](https://img.shields.io/npm/v/endpoint-murmurhash3?style=for-the-badge)
+![NPM Bundle Size](https://img.shields.io/bundlephobia/minzip/endpoint-murmurhash3?style=for-the-badge)
+![Type Definitions](https://img.shields.io/npm/types/endpoint-murmurhash3?style=for-the-badge)
 
 ## Usage
 
