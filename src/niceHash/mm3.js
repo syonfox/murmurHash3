@@ -224,3 +224,4 @@ function x64hash128(buf = new Uint8Array(0), state = 0x0, finalize = true) {
 }
 export { bufToHex, strToBuf, x64hash128 };
 export default x64hash128;
+// this has been slimmed down to only the 128b 64bit hash method. firectly from the murmur3-ts implementation build output.
