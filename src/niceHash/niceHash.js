@@ -16,7 +16,7 @@ async function generateSHA256(inputText) {
   return {hashHex, hashBase64};
 }
 
-async function generateMM128(inputText) {
+async function generateMM3128(inputText) {
   const hash = x64hash128(inputText);
   const base64String = b16tob64(hash);
   return {hashHex: hash, hashBase64: base64String};
@@ -36,7 +36,7 @@ function b16tob64(hexString) {
  * @returns {Promise<{sha256: {hashBase64: string, hashHex: string}, mm3128: {hashBase64: string, hashHex: {len: *, h1: *, h2: *, rem: Uint8Array}|string|Uint8Array}}>}
  */
 async function niceHash(str, byte1 = "=", byte2 = "=", byte3 = "=") {
-  let mm = await generateMM128(str);
+  let mm = await generateMM3128(str);
   let sh = await generateSHA256(str);
 
   let nh = {
@@ -58,7 +58,7 @@ async function niceHash(str, byte1 = "=", byte2 = "=", byte3 = "=") {
 
 function parseHash(h) {
   let mm64 =  h.substring(0, 22) + "=="
-  let sha256 =  h.substring(26, 68) + "=";
+  let sha256 =  h.substring(25, 68) + "=";
   let b = [ h.substring(22, 23), h.substring(23, 24), h.substring(68, 69)]
   return {sha256, mm3128: mm64, b}
 }
@@ -71,7 +71,13 @@ async function testNH() {
     let dec = parseHash(nh.no)
     console.log(dec)
 
-    console.assert(dec.b[2] == "B")
+    console.assert(dec.b[0] == 'A')
+    console.assert(dec.b[1] == 'B')
+    console.assert(dec.b[2] == 'C')
+    console.assert(dec.mm3128 == nh.mm3128.hashBase64)
+    console.assert(dec.sha256 == nh.sha256.hashBase64)
+
+
   });
 
 
