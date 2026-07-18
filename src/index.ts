@@ -9,6 +9,18 @@
  */
 import {U32, U64, U64Spill, X64Hash128State, X86Hash32State, X86Hash128State} from "./types.js";
 
+// import {
+//   testNH,
+//   parseHash,
+//   niceHash,generateSHA256,generateMM3128, mm3
+// } from "./niceHash/niceHash.js"
+//
+// const nh = {
+//   testNH,
+//   parseHash,
+//   niceHash,generateSHA256,generateMM3128, mm3
+// }
+
 const strToBuf = TextEncoder.prototype.encode.bind(new TextEncoder());
 
 const hexLUT = Array.from({length: 256}, (_, i) => `00${i.toString(16)}`.slice(-2));

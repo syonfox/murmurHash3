@@ -29,8 +29,15 @@
     "src/**/*"
   ],
   "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./niceHash": {
+      "import": "./dist/niceHash/mm3.js",
+      "require": "./dist/niceHash/mm3.js"
+    },
+    "./niceHash/umd": "./dist/niceHash/mm3.umd.js"
   },
   "publishConfig": {
     "access": "public"

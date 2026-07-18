@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>Murmur Word Galaxy</title>
+
+    <style>
+        html,body {
+            margin:0;
+            padding:0;
+            overflow:hidden;
+            background:#000;
+            color:white;
+            font-family:monospace;
+        }
+
+        canvas {
+            display:block;
+        }
+
+        #ui {
+            position:absolute;
+            top:10px;
+            left:10px;
+            z-index:10;
+        }
+
+        textarea {
+            width:350px;
+            height:100px;
+            background:#111;
+            color:white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<div id="ui">
+
+<textarea id="input">
+hello world hello hash world
+</textarea><br>
+<label>
+Spacing
+<input id="spacing" type="range" min="1" max="20" value="5" step="1">
+</label>
+    <br>
+
+    <button id="lorem">
+        Lorem Ipsum
+    </button>
+
+    <button id="all2letters">
+        Every 2 letter combo
+    </button>
+
+    <button id="readme">
+        Load README.md
+    </button>
+    <div id="debug"></div>
+
+</div>
+
+
+<canvas id="canvas"></canvas>
+<script type="module">
+    import { generateMM3128 } from "./niceHash.js";
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    let words = [];
+    let spacing = 5;
+    let cam = {x:0,y:0,z:1};
+    let drag = false;
+    let mx = 0;
+    let my = 0;
+
+    function resize(){
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+    }
+    addEventListener("resize", resize);
+    resize();
+
+
+    canvas.onmousedown = e=>{
+        drag=true;
+        mx=e.clientX;
+        my=e.clientY;
+    };
+
+    onmouseup=()=>drag=false;
+
+    onmousemove=e=>{
+        if(!drag) return;
+        cam.x += e.clientX-mx;
+        cam.y += e.clientY-my;
+        mx=e.clientX;
+        my=e.clientY;
+    };
+
+    canvas.onwheel=e=>{
+        e.preventDefault();
+        cam.z *= e.deltaY < 0 ? 1.1 : 0.9;
+        cam.z=Math.max(.2,Math.min(8,cam.z));
+    };
+
+
+    function hashPos(b64){
+        let a=[...b64].map(c=>c.charCodeAt(0));
+        return {
+            x:a[0]||0,
+            y:a[1]||0,
+            r:a[2]||100,
+            g:a[3]||100,
+            b:a[4]||100
+        };
+    }
+
+
+    async function build(text){
+
+        let tokens =
+            text.toLowerCase()
+                .match(/[a-z]+/g)||[];
+
+        let count={};
+
+        for(let w of tokens)
+            count[w]=(count[w]||0)+1;
+
+        words=[];
+
+        for(let w of Object.keys(count)){
+
+            let h=await generateMM3128(w);
+            let p=hashPos(h.hashBase64);
+
+            words.push({
+                word:w,
+                count:count[w],
+                ...p
+            });
+        }
+
+        document.getElementById("debug").innerHTML =
+            "words: "+words.length;
+    }
+
+
+
+    function draw(){
+
+        // blurred trail background
+        ctx.fillStyle="rgba(0,0,0,0.15)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.save();
+
+        ctx.translate(
+            canvas.width/2+cam.x,
+            canvas.height/2+cam.y
+        );
+
+        ctx.scale(cam.z,cam.z);
+
+
+        for(let w of words){
+            let s = spacing * cam.z;
+            // let x=(w.x-128)*5;
+            // let y=(w.y-128)*5;
+            let x=(w.x-128)*s;
+            let y=(w.y-128)*s;
+            let r=15+Math.log(w.count+1)*8;
+
+            ctx.shadowBlur=35;
+            ctx.shadowColor=
+                `rgb(${w.r},${w.g},${w.b})`;
+
+            ctx.beginPath();
+            ctx.fillStyle=
+                `rgb(${w.r},${w.g},${w.b})`;
+
+            ctx.arc(x,y,r,0,Math.PI*2);
+            ctx.fill();
+
+
+            // label centered
+            ctx.shadowBlur=0;
+            ctx.fillStyle="white";
+            ctx.font=`${Math.min(r,18)}px monospace`;
+            ctx.textAlign="center";
+            ctx.textBaseline="middle";
+
+            ctx.fillText(
+                w.word,
+                x,
+                y
+            );
+        }
+
+        ctx.restore();
+
+        requestAnimationFrame(draw);
+    }
+
+
+
+    const input=document.getElementById("input");
+
+    input.oninput=()=>{
+        build(input.value);
+    };
+
+
+    document.getElementById("lorem").onclick = () => {
+
+        let t =
+            "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ";
+
+        input.value = t.repeat(20).slice(0,1000);
+
+        build(input.value);
+    };
+
+
+    document.getElementById("all2letters").onclick = () => {
+
+        const chars = "abcdefghijklmnopqrstuvwxyz";
+
+        let combos = [];
+
+        for (let a of chars) {
+            for (let b of chars) {
+                combos.push(a + b);
+            }
+        }
+
+        input.value = combos.join(" ");
+
+        build(input.value);
+    };
+
+
+
+    document.getElementById("readme").onclick = async () => {
+
+        try {
+
+            const response =
+                await fetch("./README.md");
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "README load failed: " + response.status
+                );
+            }
+
+
+            const text =
+                await response.text();
+
+
+            input.value = text;
+
+            build(input.value);
+
+
+        } catch(e) {
+
+            console.error(e);
+
+            input.value =
+                "Could not load README.md\n" + e.message;
+
+            build(input.value);
+        }
+
+    };
+    document.getElementById("spacing").oninput = e => {
+        spacing = parseInt(e.target.value);
+    };
+
+    build(input.value);
+    draw();
+
+</script>
+
+
+<!--<script type="module">-->
+
+<!--    import {-->
+<!--        generateMM3128-->
+<!--    } from "./niceHash.js";-->
+
+
+
+<!--    const canvas =-->
+<!--        document.getElementById("canvas");-->
+
+<!--    const ctx =-->
+<!--        canvas.getContext("2d");-->
+
+
+
+<!--    function resize(){-->
+
+<!--        canvas.width =-->
+<!--            window.innerWidth;-->
+
+<!--        canvas.height =-->
+<!--            window.innerHeight;-->
+<!--    }-->
+
+<!--    window.addEventListener(-->
+<!--        "resize",-->
+<!--        resize-->
+<!--    );-->
+
+<!--    resize();-->
+
+
+
+<!--    let words=[];-->
+
+
+
+<!--    function hashToNumbers(base64){-->
+
+<!--        let a=[];-->
+
+<!--        for(let c of base64){-->
+
+<!--            a.push(-->
+<!--                c.charCodeAt(0)-->
+<!--            );-->
+
+<!--        }-->
+
+
+<!--        return {-->
+
+<!--            x:a[0] || 0,-->
+<!--            y:a[1] || 0,-->
+
+<!--            r:a[2] || 0,-->
+<!--            g:a[3] || 0,-->
+<!--            b:a[4] || 0,-->
+
+<!--            speed:-->
+<!--                (a[5]||1)/20-->
+
+<!--        };-->
+
+<!--    }-->
+
+
+
+<!--    async function build(text){-->
+
+
+<!--        let tokens =-->
+<!--            text-->
+<!--                .toLowerCase()-->
+<!--                .match(/[a-z]+/g) || [];-->
+
+
+
+<!--        let freq={};-->
+
+
+<!--        for(let w of tokens){-->
+
+<!--            freq[w] =-->
+<!--                (freq[w]||0)+1;-->
+
+<!--        }-->
+
+
+
+<!--        words=[];-->
+
+
+
+<!--        for(let w of Object.keys(freq)){-->
+
+
+<!--            let hash =-->
+<!--                await generateMM3128(w);-->
+
+
+
+<!--            let n =-->
+<!--                hashToNumbers(-->
+<!--                    hash.hashBase64-->
+<!--                );-->
+
+
+
+<!--            words.push({-->
+
+<!--                word:w,-->
+
+<!--                count:freq[w],-->
+
+<!--                ...n,-->
+
+<!--                angle:Math.random()*6.28-->
+
+<!--            });-->
+
+
+<!--        }-->
+
+
+
+<!--        document-->
+<!--            .getElementById("debug")-->
+<!--            .innerHTML =-->
+<!--            `-->
+<!--    words:${words.length}<br>-->
+<!--    ${words.map(x=>x.word).join(",")}-->
+<!--    `;-->
+
+
+<!--    }-->
+
+
+
+<!--    function draw(t){-->
+
+
+<!--        ctx.fillStyle="#000";-->
+<!--        ctx.fillRect(-->
+<!--            0,-->
+<!--            0,-->
+<!--            canvas.width,-->
+<!--            canvas.height-->
+<!--        );-->
+
+
+
+<!--        ctx.font="18px monospace";-->
+
+
+<!--        for(let w of words){-->
+
+
+<!--            // hash -> screen position-->
+
+<!--            let x =-->
+<!--                (w.x/255) *-->
+<!--                canvas.width;-->
+
+
+<!--            let y =-->
+<!--                (w.y/255) *-->
+<!--                canvas.height;-->
+
+
+
+<!--            // small animation-->
+
+<!--            x +=-->
+<!--                Math.sin(-->
+<!--                    t*0.001+w.x-->
+<!--                )*10;-->
+
+
+<!--            y +=-->
+<!--                Math.cos(-->
+<!--                    t*0.001+w.y-->
+<!--                )*10;-->
+
+
+
+<!--            let size =-->
+<!--                10 +-->
+<!--                w.count*8;-->
+
+
+
+<!--            ctx.beginPath();-->
+
+<!--            ctx.fillStyle =-->
+<!--                `rgb(${w.r},${w.g},${w.b})`;-->
+
+<!--            ctx.arc(-->
+<!--                x,-->
+<!--                y,-->
+<!--                size,-->
+<!--                0,-->
+<!--                Math.PI*2-->
+<!--            );-->
+
+<!--            ctx.fill();-->
+
+
+
+<!--            ctx.fillStyle="white";-->
+
+<!--            ctx.fillText(-->
+<!--                w.word,-->
+<!--                x+size+5,-->
+<!--                y-->
+<!--            );-->
+
+
+<!--        }-->
+
+
+<!--        requestAnimationFrame(draw);-->
+
+<!--    }-->
+
+
+
+<!--    document-->
+<!--        .getElementById("input")-->
+<!--        .addEventListener(-->
+<!--            "input",-->
+<!--            e=>{-->
+
+<!--                build(e.target.value);-->
+
+<!--            });-->
+
+
+
+<!--    document-->
+<!--        .getElementById("lorem")-->
+<!--        .onclick=()=>{-->
+
+<!--        let s =-->
+<!--            `-->
+<!--Lorem ipsum dolor sit amet consectetur adipiscing elit-->
+<!--sed do eiusmod tempor incididunt ut labore et dolore magna aliqua-->
+<!--ut enim ad minim veniam quis nostrud exercitation ullamco laboris-->
+<!--`;-->
+
+<!--        document-->
+<!--            .getElementById("input")-->
+<!--            .value =-->
+<!--            s.repeat(20).slice(0,1000);-->
+
+
+<!--        build(-->
+<!--            document-->
+<!--                .getElementById("input")-->
+<!--                .value-->
+<!--        );-->
+
+<!--    };-->
+
+
+
+<!--    build(-->
+<!--        document.getElementById("input").value-->
+<!--    );-->
+
+
+
+<!--    requestAnimationFrame(draw);-->
+
+
+<!--</script>-->
+
+
+</body>
+</html>

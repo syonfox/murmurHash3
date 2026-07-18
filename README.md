@@ -4,38 +4,18 @@
 
 WHO WHAT WHY WHEN WHERE HOW
 
-#### Who 
+#### What
 
-i think Andrew made it originally and syonfox maintains this repo
+a non crypto hash function that is pretty dar random except for repetitions or something.
+
+
+#### Who 
 
 <details>
 <summary>
 Who
 </summary>
 
-#### What
-
-a non crypto hash function that is pretty dar random exept for repatitions.
-
-#### Why
-
-becuse we liked the name murmur
-
-#### When   
-  
-  MurmurHash3 was created by Austin Appleby and completed on April 3, 2011.
-  
-#### Where
-
-There isn’t any reliable, publicly documented information I can find that says where Austin Appleby was working or what university/employment he was in around the time MurmurHash3 was completed (April 3, 2011). The main public references I’m seeing just describe that he created MurmurHash (and MurmurHash3) but don’t include a timeline of his schooling or job status. 
-
-#### How
-
-ok i read his blog and it sounded like he wanted a hash function in 10 instructions of asembaly
-
-so how the need for speed made a function thats fast.
-
-maybe that is the why also
 
 ```shell
 
@@ -116,11 +96,51 @@ unsigned int MurmurHash ( const unsigned char * data, int len, unsigned int h )
 }
 
 ```
-
-</summary>
 </details>
 
 
+#### Why
+
+because we liked the name murmur
+
+#### When
+
+MurmurHash3 was created by Austin Appleby and completed on April 3, 2011.
+
+#### Where
+
+There isn’t any reliable, publicly documented information I can find that says where Austin Appleby was working or what university/employment he was in around the time MurmurHash3 was completed (April 3, 2011). The main public references I’m seeing just describe that he created MurmurHash (and MurmurHash3) but don’t include a timeline of his schooling or job status.
+
+#### How
+
+Ok I read his blog and it sounded like he wanted a hash function in 10 instructions of asembaly
+
+so how the need for speed made a function thats fast.
+
+<details>
+<summary>
+maybe that is the why also
+</summary>
+
+## Guide to how to use this package
+
+```shell
+apt install nodejs npm
+
+mkdir -p myapp
+cd myapp
+
+npm init -y
+
+npm install endpoint-murmurhash3
+
+cat 
+
+
+
+```
+
+</details>
 
 
 # Original Readme Of MurMurhash TS project
