@@ -1,22 +1,22 @@
 {
   "name": "endpoint-murmurhash3",
-  "version": "0.1.12",
-  "description": "MurmurHash3 in TypeScript",
+  "version": "0.2.0",
+  "description": "Opinionated pure js MurmurHash3 in TypeScript With a NiceHash in js.",
   "keywords": [
+    "128bit",
+    "64bit",
+    "anti-collision",
     "hash",
     "hashing",
     "incremental",
     "murmmurhash3",
     "murmurhash",
     "progressive",
-    "64bit",
-    "128bit",
-    "anti-collision"
+    "endpoint"
   ],
   "license": "MIT",
   "repository": "github:reemus-dev/murmurhash3-ts",
-  "homepage": "https://github.com/syonfox/murmurHash3",
-  "bugs": "https://github.com/reemus-dev/murmurHash3/issues",
+  "homepage": "",
   "author": {
     "name": "Tarun Ramesh",
     "email": "tarun@reemus.dev"
@@ -25,7 +25,8 @@
   "main": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "src/**/*"
   ],
   "exports": {
     "import": "./dist/esm/index.js",
@@ -35,7 +36,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "pnpm clean && pnpm build:esm && pnpm build:cjs",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && cp -R src/niceHash dist/niceHash",
     "build:cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' | tee ./dist/cjs/package.json > /dev/null",
     "build:esm": "tsc -p tsconfig.esm.json",
     "clean": "rm -rf ./dist ./coverage",
@@ -43,78 +44,15 @@
     "cs:add": "changeset add",
     "cs:version": "changeset version",
     "lint": "eslint src/**",
-    "postinstall": "[ \"$CI\" = \"1\" ] && exit 0; syncpack format",
-    "release": "pnpm lint && pnpm build && pnpm test && changeset publish",
-    "test": "jest --config jest.config.js"
+    "postinstall": "echo endpoint-murmurhash3",
+    "release": "git push"
   },
   "devDependencies": {
-    "@changesets/cli": "2.26.1",
-    "@trivago/prettier-plugin-sort-imports": "4.1.1",
     "@tsconfig/recommended": "1.0.2",
     "@types/jest": "29.5.2",
     "@types/node": "20.3.1",
     "@typescript-eslint/eslint-plugin": "5.59.11",
     "@typescript-eslint/parser": "5.59.11",
-    "concurrently": "8.2.0",
-    "coveralls": "3.1.1",
-    "eslint": "8.42.0",
-    "eslint-config-prettier": "8.8.0",
-    "jest": "29.5.0",
-    "prettier": "2.8.8",
-    "syncpack": "10.5.1",
-    "ts-jest": "29.1.0",
     "typescript": "5.1.3"
-  },
-  "syncpack": {
-    "dev": true,
-    "filter": ".",
-    "indent": "  ",
-    "overrides": true,
-    "peer": true,
-    "prod": true,
-    "resolutions": true,
-    "semverGroups": [],
-    "semverRange": "",
-    "sortAz": [
-      "scripts",
-      "contributors",
-      "dependencies",
-      "devDependencies",
-      "keywords",
-      "peerDependencies"
-    ],
-    "sortFirst": [
-      "name",
-      "version",
-      "private",
-      "description",
-      "keywords",
-      "license",
-      "repository",
-      "homepage",
-      "bugs",
-      "author",
-      "sideEffects",
-      "type",
-      "main",
-      "module",
-      "types",
-      "files",
-      "exports",
-      "bin",
-      "publishConfig",
-      "scripts",
-      "dependencies",
-      "devDependencies",
-      "prettier",
-      "xo",
-      "eslintConfig",
-      "syncpack"
-    ],
-    "source": [
-      "package.json",
-      "packages/*/package.json",
-      "tests/*/package.json"
-    ]
   }
 }

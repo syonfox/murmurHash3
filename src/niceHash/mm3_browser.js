@@ -425,14 +425,14 @@ function bytesToHex(bytes) {
 }
 
 
-// // murmurhash3.utils = {
-// //     base64ToBytes,hexToBytes,utf8ToBytes,
-// //     looksLikeBase64, looksLikeHex,
-// //     normalizeToBytesAndKind
-// // }
-export { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
+// murmurhash3.utils = {
+//     base64ToBytes,hexToBytes,utf8ToBytes,
+//     looksLikeBase64, looksLikeHex,
+//     normalizeToBytesAndKind
+// }
+window.mm3 = { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
     looksLikeBase64, looksLikeHex,
     normalizeToBytesAndKind, bytesToHex, hexToBase64
 };
-// // export default x64hash128;
-// // this has been slimmed down to only the 128b 64bit hash method. directly from the murmur3-ts implementation build output.
+// export default x64hash128;
+// this has been slimmed down to only the 128b 64bit hash method. directly from the murmur3-ts implementation build output.

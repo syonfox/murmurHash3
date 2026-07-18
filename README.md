@@ -1,18 +1,162 @@
+# Endpoint MurmurHash3
+
+### emh3
+
+WHO WHAT WHY WHEN WHERE HOW
+
+#### Who 
+
+i think Andrew made it originally and syonfox maintains this repo
+
+<details>
+<summary>
+Who
+</summary>
+
+#### What
+
+a non crypto hash function that is pretty dar random exept for repatitions.
+
+#### Why
+
+becuse we liked the name murmur
+
+#### When   
+  
+  MurmurHash3 was created by Austin Appleby and completed on April 3, 2011.
+  
+#### Where
+
+There isn’t any reliable, publicly documented information I can find that says where Austin Appleby was working or what university/employment he was in around the time MurmurHash3 was completed (April 3, 2011). The main public references I’m seeing just describe that he created MurmurHash (and MurmurHash3) but don’t include a timeline of his schooling or job status. 
+
+#### How
+
+ok i read his blog and it sounded like he wanted a hash function in 10 instructions of asembaly
+
+so how the need for speed made a function thats fast.
+
+maybe that is the why also
+
+```shell
+
+
+    tanjent
+    Subscribe
+
+    March 3 2008, 13:31
+
+0
+300
+MurmurHash, final version.
+UPDATE - If you're reading this via a link from Google or Reddit, please go here - http://murmurhash.googlepages.com. All future updates about MurmurHash will be posted there.
+
+UPDATEUPDATE - MurmurHash is now at version 2.0. The new version uses a different mix function than the below that is much faster & mixes better. Code is on the website linked above.
+
+
+
+
+
+OK, I'm done with this for the time being. Figured out a clever way to generate and test mixing constants and found a much better one, replaced the "h ^= data" with "h += data" (very slightly better collision resistance), and ended up removing the rotate instruction and replacing with a shift-xor (should I rename it MusxmusxHash?).
+
+This version passes Jenkin's frog.c torture-test up to 2^25 keypairs (beats Hsieh's 2^17; previous Murmur failed after 2^9), distribution is still excellent (only 3 collisions on the SCOWL english-words.95 list vs. Hsieh's 41), and still runs faster than Hsieh and Jenkins at 1300 mb/sec vs. their ~900 mb/sec.
+
+You should be able to use this hash function anywhere you like with very good results. I'll work on getting it posted up to interesting places this week.
+
+Performance results from Hsieh's test app -
+
+CRC32           :  4.7810s
+oneAtATimeHash  :  3.5470s
+alphaNumHash    :  2.2500s
+FNVHash         :  2.1870s
+Jenkins lookup3 :  1.2650s
+SuperFastHash   :  1.2970s
+MurmurHash      :  0.9060s
+
+
+
+-tanjent
+
+
+//-------------------------------------------------------------------
+unsigned int MurmurHash ( const unsigned char * data, int len, unsigned int h )
+{
+	const unsigned int m = 0x7fd652ad;
+	const int r = 16;
+ 
+	h += 0xdeadbeef;
+
+	while(len >= 4)
+	{
+		h += *(unsigned int *)data;
+		h *= m;
+		h ^= h >> r;
+
+		data += 4;
+		len -= 4;
+	}
+
+	switch(len)
+	{
+	case 3:
+		h += data[2] << 16;
+	case 2:
+		h += data[1] << 8;
+	case 1:
+		h += data[0];
+		h *= m;
+		h ^= h >> r;
+	};
+
+	h *= m;
+	h ^= h >> 10;
+	h *= m;
+	h ^= h >> 17;
+
+	return h;
+}
+
+```
+
+</summary>
+</details>
+
+
+
+
+# Original Readme Of MurMurhash TS project
+
+## your milage may very
+
+```shell
+git clone this repo
+
+cd murmurHash3
+
+npm install
+
+npm run build
+
+
+```
+
+
+
+# Original Readme
+v1 deploy   
+
+https://ad214310.murmurhash3.pages.dev/dist/cjs/index.js
+
+https://ad214310.murmurhash3.pages.dev/dist/esm/index.js
+
+
+
 # MurmurHash3 (TS)
 
-[//]: # (![License]&#40;https://img.shields.io/github/license/reemus-dev/murmurhash3-ts?style=for-the-badge&#41;)
-
-[//]: # (![Codecov]&#40;https://img.shields.io/codecov/c/github/reemus-dev/murmurhash3-ts?style=for-the-badge&#41;)
-
-[//]: # (![GitHub Workflow Status]&#40;https://img.shields.io/github/actions/workflow/status/reemus-dev/murmurhash3-ts/release.yml?style=for-the-badge&#41;)
-
-![NPM Version](https://img.shields.io/npm/v/endpoint-murmurhash3?style=for-the-badge)
-![NPM Bundle Size](https://img.shields.io/bundlephobia/minzip/endpoint-murmurhash3?style=for-the-badge)
-![Type Definitions](https://img.shields.io/npm/types/endpoint-murmurhash3?style=for-the-badge)
 
 ## Usage
 
-```javascript
+```
+
 > const murmurHash3 = require('murmurhash3.js');
 
 // Return a 32bit hash as an unsigned integer:
@@ -99,7 +243,6 @@ x64: {
 }
 ,
 }
-```
 
 
 - - -
