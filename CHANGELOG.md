@@ -1,4 +1,17 @@
-# murmurhash3-ts
+# murmurhash3
+
+## 0.2.0
+
+- remove tests
+- keep basic ts config
+- add nice hash
+- add opinionated nicehash/mm3.js
+- or is it a nice standard
+- work in progress documentation.
+- deploy to internet
+- and to npm at endpoint-murmurhash3 https://www.npmjs.com/package/endpoint-murmurhash3?activeTab=code
+
+
 
 ## 0.1.11
 
