@@ -1,7 +1,7 @@
 {
   "name": "endpoint-murmurhash3",
-  "version": "0.2.0",
-  "description": "Opinionated pure js MurmurHash3 in TypeScript With a NiceHash in js.",
+  "version": "0.2.2",
+  "description": "Opinionated pure js MurmurHash3 with legacy implementation TypeScript. NiceHash in js.",
   "keywords": [
     "128bit",
     "64bit",
@@ -12,21 +12,37 @@
     "murmmurhash3",
     "murmurhash",
     "progressive",
-    "endpoint"
+    "endpoint",
+    "nicehash",
+    "non-cryptograpic-hash",
+    "crypto",
+    "fast",
+    "random",
+    "uniform",
+    "distrubution",
+    "js", "ts", "browser", "esm", "demo"
   ],
   "license": "MIT",
-  "repository": "github:reemus-dev/murmurhash3-ts",
-  "homepage": "",
+  "repository": "github:syonfox/murmurHash3",
+  "homepage": "murmurhash3.pages.dev",
   "author": {
     "name": "Tarun Ramesh",
     "email": "tarun@reemus.dev"
   },
+  "maintainers": [
+    {
+      "name": "Syonfox",
+      "email": "dev@syon.ca"
+    }
+  ],
   "type": "module",
   "main": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [
     "dist/**/*",
-    "src/**/*"
+    "src/**/*",
+    "dist/niceHash/mm3_browser.js",
+    "dist/niceHash/niceHash_browser.js"
   ],
   "exports": {
     ".": {
@@ -34,32 +50,28 @@
       "require": "./dist/cjs/index.js"
     },
     "./niceHash": {
-      "import": "./dist/niceHash/mm3.js",
-      "require": "./dist/niceHash/mm3.js"
+      "import": "./dist/niceHash/niceHash.js",
+      "require": "./dist/niceHash/niceHash.js"
     },
-    "./niceHash/umd": "./dist/niceHash/mm3.umd.js"
+    "./niceHash/mm3": "./dist/niceHash/mm3.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && cp -R src/niceHash dist/niceHash",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && cp -R src/niceHash dist/niceHash && echo \"Copied src/niceHash -> dist/niceHash\n\nDone.\"",
     "build:cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' | tee ./dist/cjs/package.json > /dev/null",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "clean": "rm -rf ./dist ./coverage",
-    "coveralls": "jest --config jestconfig.json --silent --coverage --coverageReporters=text-lcov | coveralls",
-    "cs:add": "changeset add",
-    "cs:version": "changeset version",
-    "lint": "eslint src/**",
-    "postinstall": "echo endpoint-murmurhash3",
-    "release": "git push"
+    "clean": "rm -rf ./dist",
+    "postinstall": "echo endpoint-murmurhash3 postinstall you should disable post install in npm by defualt with: npm config set ignore-scripts true",
+    "sri": "FILE=src/niceHash/mm3_browser.js HASH=$(openssl dgst -sha256 -binary \"$FILE\" | openssl base64 -A) && echo \"<script src='https://murmurhash3.pages.dev/mm3_browser.js' integrity='sha256-$HASH' crossorigin='anonymous'></script>\"",
+    "server": "PORT=1234 npx endpoint-ei --server ./dist",
+    "demo": "firefox localhost:1234/niceHash/mm3_browser_test2.html"
   },
   "devDependencies": {
     "@tsconfig/recommended": "1.0.2",
     "@types/jest": "29.5.2",
     "@types/node": "20.3.1",
-    "@typescript-eslint/eslint-plugin": "5.59.11",
-    "@typescript-eslint/parser": "5.59.11",
     "typescript": "5.1.3"
   }
 }

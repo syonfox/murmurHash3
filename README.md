@@ -1,39 +1,30 @@
 # Endpoint MurmurHash3
 
-### emh3
-
-WHO WHAT WHY WHEN WHERE HOW
+WHO WHAT WHY WHEN HOW
 
 #### What
 
 a non crypto hash function that is pretty dar random except for repetitions or something.
 
+## hosted at https://murmurhash3.pages.dev
 
-#### Who 
+
+#### Who
 
 <details>
 <summary>
 Who
 </summary>
 
-
-```shell
-
-
     tanjent
-    Subscribe
 
     March 3 2008, 13:31
 
-0
-300
+
 MurmurHash, final version.
 UPDATE - If you're reading this via a link from Google or Reddit, please go here - http://murmurhash.googlepages.com. All future updates about MurmurHash will be posted there.
 
 UPDATEUPDATE - MurmurHash is now at version 2.0. The new version uses a different mix function than the below that is much faster & mixes better. Code is on the website linked above.
-
-
-
 
 
 OK, I'm done with this for the time being. Figured out a clever way to generate and test mixing constants and found a much better one, replaced the "h ^= data" with "h += data" (very slightly better collision resistance), and ended up removing the rotate instruction and replacing with a shift-xor (should I rename it MusxmusxHash?).
@@ -44,6 +35,7 @@ You should be able to use this hash function anywhere you like with very good re
 
 Performance results from Hsieh's test app -
 
+```
 CRC32           :  4.7810s
 oneAtATimeHash  :  3.5470s
 alphaNumHash    :  2.2500s
@@ -51,12 +43,12 @@ FNVHash         :  2.1870s
 Jenkins lookup3 :  1.2650s
 SuperFastHash   :  1.2970s
 MurmurHash      :  0.9060s
-
+```
 
 
 -tanjent
 
-
+```shell
 //-------------------------------------------------------------------
 unsigned int MurmurHash ( const unsigned char * data, int len, unsigned int h )
 {
@@ -107,10 +99,6 @@ because we liked the name murmur
 
 MurmurHash3 was created by Austin Appleby and completed on April 3, 2011.
 
-#### Where
-
-There isn’t any reliable, publicly documented information I can find that says where Austin Appleby was working or what university/employment he was in around the time MurmurHash3 was completed (April 3, 2011). The main public references I’m seeing just describe that he created MurmurHash (and MurmurHash3) but don’t include a timeline of his schooling or job status.
-
 #### How
 
 Ok I read his blog and it sounded like he wanted a hash function in 10 instructions of asembaly
@@ -134,10 +122,11 @@ npm init -y
 
 npm install endpoint-murmurhash3
 
-cat 
+mkdir -p src
 
+nano src/script.js
 
-
+node src/script.js
 ```
 
 </details>
@@ -158,8 +147,9 @@ npm run build
 
 
 ```
+### nice blog on mmh3
 
-
+https://medium.com/@thealonemusk/what-i-actually-learned-from-senior-engineers-in-1-5-years-of-watching-them-code-99d5c4ef1efb
 
 # Original Readme
 v1 deploy   

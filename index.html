@@ -1,23 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<body style="font-family:sans-serif;max-width:600px;margin:40px auto;line-height:1.6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h1>MurMur3</h1>
+    <title>MurMur3 - Fast MurmurHash3 & SHA-256 Hashing for JavaScript</title>
 
-<p>Welcome to the dev page. Make an issue if you wish.</p>
+    <meta name="description" content="MurMur3 provides fast MurmurHash3 and SHA-256 hashing utilities for JavaScript, Node.js, browsers, and npm projects. Explore demos, examples, and hashing tools.">
 
-<a href="https://github.com/syonfox/murmurhash3">GitHub</a><br>
-<a href="https://murmurhash3.pages.dev">Self</a><br>
-<a href="./dist/niceHash/mm3_browser_test2.html">Demo</a><br>
-<a href="./dist/niceHash/wordmap.html">Demo Pts Visual</a><br>
-<a href="./dist/niceHash/mm3.js">code esm</a><br>
-<a href="./dist/niceHash/mm3.umd.js">code umd</a><br>
+    <meta name="keywords" content="MurmurHash3, JavaScript hash, Node.js hash, SHA-256, npm hashing library, fast hash function">
 
-<a href="https://www.npmjs.com/package/endpoint-murmurhash3?activeTab=code">NPM Code</a><br>
-<a href="https://puter.com/app/murmurhash3">Puter App</a>
+    <meta property="og:title" content="MurMur3 - JavaScript MurmurHash3 & SHA-256">
+    <meta property="og:description" content="Fast hashing utilities for developers using MurmurHash3 and SHA-256 in Node.js and browsers.">
+    <meta property="og:url" content="https://murmurhash3.pages.dev">
+
+    <link rel="canonical" href="https://murmurhash3.pages.dev">
+
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        nav a {
+            display: inline-block;
+            margin: 4px 0;
+        }
+
+        .card {
+            background: #f6f6f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>Endpoint MurMurHash3 NiceHash</h1>
+<code>npm install endpoint-murmurhash3</code><br>
+<code>import {niceHash, parseHash} from "endpoint-murmurhash3/niceHash"</code>
+
+<p>
+    Fast JavaScript hashing tools for developers.
+    Generate <strong>MurmurHash3</strong> hashes and <strong>SHA-256</strong> in esm systems with web crypto used for sha256.
+    Ideal for workers and nodejs apps.
+
+</p>
 
 
+<div class="card">
 
+    <h2>Start Here</h2>
+
+    <p>
+        Try the interactive demo first, then explore the source code and npm package. This uses niceHash/mm3_browser.js
+        to help visualize murmur3.
+    </p>
+
+    <a href="./dist/niceHash/mm3_browser_test2.html">
+        <strong>→ Open Demo</strong>
+    </a>
+
+</div>
+
+
+<h2>About MurmurHash3</h2>
+
+<p>
+    <strong>MurmurHash3</strong> is a fast non-cryptographic hash function designed
+    for speed and good distribution. It is commonly used for hash tables,
+    databases, bloom filters, caches, and data processing systems.
+</p>
+
+<ul>
+    <li>Very fast hashing performance</li>
+    <li>Excellent distribution of input values</li>
+    <li>Small hash outputs (32-bit / 128-bit variants)</li>
+    <li>Ideal for identifiers, indexing, and lookup systems</li>
+</ul>
+
+
+<h2>About SHA-256</h2>
+
+<p>
+    <strong>SHA-256</strong> is a cryptographic hash function from the SHA-2 family.
+    Unlike MurmurHash3, it is designed for security applications where collision
+    resistance matters.
+</p>
+
+<ul>
+    <li>256-bit cryptographic digest</li>
+    <li>Used in signatures, certificates, and blockchain systems</li>
+    <li>One-way hashing suitable for security workflows</li>
+</ul>
+
+
+<h2>Node.js Example</h2>
+
+<p>
+    Install the package:
+</p>
+
+<pre><code>
+npm install endpoint-murmurhash3
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>
+import {
+    niceHash,
+    generateSHA256,
+    generateMM3128,
+    parseHash
+} from "endpoint-murmurhash3/niceHash";
+
+const result = await niceHash(
+    "example",
+    "A",
+    "B",
+    "C"
+);
+
+console.log(result);
+
+const parsed = parseHash(result.no);
+
+console.log(parsed);
+
+console.log(
+    await generateSHA256("example")
+);
+
+console.log(
+    await generateMM3128("example")
+);
+</code></pre>
+
+
+<h2>Resources</h2>
+
+<nav>
+    <a href="https://github.com/syonfox/murmurhash3">GitHub</a><br>
+    <a href="https://murmurhash3.pages.dev">Website</a><br>
+    <a href="./dist/niceHash/mm3_browser_test2.html">MurMur Terminal Test Demo</a><br>
+    <a href="./dist/niceHash/wordmap.html">Hash Visualizer Demo</a><br>
+    <a href="./dist/niceHash/nicehash_browser_demo.html">Nice Hash Browser Demo</a><br>
+    <a href="./dist/niceHash/mm3.js">ES Module Source</a><br>
+    <a href="./dist/niceHash/mm3_browser.js">Browser Source</a><br>
+    <a href="https://www.npmjs.com/package/endpoint-murmurhash3?activeTab=code">NPM Package</a><br>
+    <a href="https://puter.com/app/murmurhash3">Puter App (see self)</a>
+</nav>
+
+
+<footer>
+    <p>
+        Built for developers exploring fast hashing in JavaScript.
+    </p>
+</footer>
 
 
 </body>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            background: hotpink;
+        }
+
+        pre {
+            margin: 2em;
+            padding: 2em;
+            overflow: auto;
+        }
+    </style>
+
+</head>
+<body>
+
+<pre style="color: lime; background: #111111"></pre>
+
+
+<script src="./mm3_browser.js" type="application/javascript"></script>
+<script src="./niceHash_browser.js" type="application/javascript"></script>
+
+
+<script>
+
+    let pre = document.querySelector("pre")
+
+    function log(...args) {
+        console.log(...args)
+        pre.innerText += args.join("");
+        pre.innerText += "\n"
+    }
+
+
+    log(Object.keys(window.mm3))
+    log(Object.keys(NiceHash))
+
+    let str = "Hello World"
+    log(str)
+    niceHash(str).then(o => {
+        console.log(o)
+        log(o.nh)
+    })
+
+    let line = ""
+    let word = ""
+
+    let hashmap = {}
+    window.addEventListener("keydown", async e => {
+        const char = e.key;
+
+
+        if (char === " ") {
+            word = "";
+            return;
+        }
+
+        word += char;
+
+        log(word, "\t\t");
+        const {nh, mm3128} = await niceHash(word);
+
+        if (hashmap[mm3128.hashBase64]) {
+            hashmap[mm3128.hashBase64]++
+        } else {
+            hashmap[mm3128.hashBase64] = 1
+        }
+        log(`[${hashmap[mm3128.hashBase64]}] `, nh);
+    });
+</script>
+</body>
+</html>

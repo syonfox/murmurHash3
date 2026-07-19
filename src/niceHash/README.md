@@ -1,12 +1,148 @@
 # NiceHash Guide for Experts
 
-hand crafted mm3.js  ESM module
+## Introduction
 
-mm3.umd.js // duh
+**NiceHash** is a lightweight hashing utility designed for developers who need both performance and reliability in their applications. It combines the speed of MurmurHash3 (128-bit) with the cryptographic strength of SHA-256 to produce a compact, structured hash output that is both efficient and secure.
 
-mm3_browser.js // simple window hook
+This project provides a flexible JavaScript implementation, including ESM, UMD, and browser-ready builds, making it easy to integrate across different environments. At its core, the `niceHash` function generates a dual-hash representation, encoding the result into a concise, customizable format suitable for indexing, caching, data distribution, and other advanced use cases.
 
-Idk what this is 
+Whether you're optimizing for speed, reducing collision risk, or experimenting with hybrid hashing strategies, NiceHash offers a practical and extensible foundation. It is particularly useful in scenarios where non-cryptographic performance must be balanced with an added layer of verification or uniqueness.
+
+For a deeper look at the underlying concepts and implementation details, explore the included modules and examples throughout this repository.
+
+
+What is the difrence between the original murmurhash3-ts found in /src/index.ts
+and nicehash found in /src/niceHash? Hensforth ill refer to these as`the ts version` and `mm3` by deafult menas mmm3-x64-128bit used in nice hash.
+
+I have taken the mm3 code from the compiles output and striped it down. then i have added utilities for encoding and decodying to bytes for normal use.
+
+nicehash also depends on web crypto for sha256 implementations. 
+
+id like to not that nice hash dose not have the speed advantages of murmurhash but by providing a dual index you can use the murmur to lookup while the network is happening you can compute the 
+sha256 and then compare to the returned result idk if theis makes sence but it seems usefull. 
+
+
+## Usage
+
+This section demonstrates how to import and work with the core modules provided by **endpoint-murmurhash3**, including the `niceHash` utility and the lower-level MurmurHash3 implementations.
+
+### Installation
+
+```bash
+npm install endpoint-murmurhash3
+```
+
+### Importing Modules
+
+```js
+import {
+  niceHash,
+  generateSHA256,
+  generateMM3128,
+  parseHash,
+  mm3
+} from "endpoint-murmurhash3/niceHash";
+
+import { murmurhash } from "endpoint-murmurhash3";
+```
+
+### Exploring Available Functions
+
+You can inspect the available utilities and hashing methods:
+
+```js
+console.log(Object.keys(mm3));
+console.log(Object.keys(murmurhash));
+console.log(Object.keys(murmurhash.x64));
+console.log(Object.keys(murmurhash.x86));
+```
+
+#### Output Overview
+
+* **`mm3` utilities**
+  Includes helpers for encoding, decoding, and hashing:
+
+    * `x64hash128` (primary MurmurHash3 128-bit function)
+    * byte/hex/base64 conversion utilities
+    * input normalization helpers
+
+* **`murmurhash` namespace**
+
+    * `x64.hash128` → 128-bit hashing (recommended for most use cases)
+    * `x86.hash32` / `x86.hash128` → alternative variants
+
+    * Browser usage: `<script src='https://murmurhash3.pages.dev/mm3_browser.js' integrity='sha256-PQ4EwRuTdFrfhz7YARixS5gxVYZSj59OuTXakeVJKGQ=' crossorigin='anonymous'></script>`
+      * dev note: please update this here and in mm3_browser_test2.html if you edit the mm3_browser file. `npm run sri`
+        
+### Generating a NiceHash
+
+```js
+const result = await niceHash("example", "A", "B", "C");
+console.log(result);
+```
+
+This produces a combined hash containing:
+
+* SHA-256 (cryptographic)
+* MurmurHash3 128-bit (fast, non-cryptographic)
+* Custom encoded output string
+
+### Parsing a NiceHash
+
+```js
+const parsed = parseHash(result.no);
+console.log(parsed);
+```
+
+This extracts:
+
+* Original SHA-256 (base64)
+* MurmurHash3 (base64)
+* Custom padding bytes
+
+### Direct Hash Generation
+
+#### SHA-256
+
+```js
+const sha = await generateSHA256("example");
+console.log(sha.hashHex, sha.hashBase64);
+```
+
+#### MurmurHash3 (128-bit)
+
+```js
+const mm = generateMM3128("example");
+console.log(mm.hashHex, mm.hashBase64);
+```
+
+### Using Raw MurmurHash3
+
+```js
+const hash = murmurhash.x64.hash128("example");
+console.log(hash);
+```
+
+### Module Structure
+
+The project is organized to support multiple environments:
+
+* `/src/niceHash/mm3.js`
+  Handcrafted ESM module with full utilities
+
+[//]: # (* `/src/niceHash/mm3.umd.js`) todo 
+
+[//]: # (  UMD build for compatibility with older Node.js versions and browsers)
+
+* `/src/niceHash/mm3_browser.js`
+  Browser-friendly version exposed via `window.mm3`
+
+* `/src/niceHash/niceHash.js`
+  Main entry point that aggregates `mm3` utilities and exports the `niceHash` API
+
+This modular design allows you to use only what you need—whether that's the full NiceHash abstraction or just the raw MurmurHash3 functions.
+
+
 
 # Nice Hash 
 

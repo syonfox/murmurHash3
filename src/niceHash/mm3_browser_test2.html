@@ -1,6 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 <head>
+    <meta charset="UTF-8">
+    <!--Note this is important for 2 / 9 of the tests.-->
     <title>MurmurHash Terminal</title>
     <style>
         body {
@@ -82,8 +84,9 @@
     <div id="hash-display"></div>
 </div>
 <footer>v1.0.0</footer>
+<!--<script src='https://murmurhash3.pages.dev/mm3_browser.js' integrity='sha256-PQ4EwRuTdFrfhz7YARixS5gxVYZSj59OuTXakeVJKGQ=' crossorigin='anonymous'></script>-->
 
-<script src="./mm3_browser.js"></script>
+<script  integrity='sha256-PQ4EwRuTdFrfhz7YARixS5gxVYZSj59OuTXakeVJKGQ=' src="./mm3_browser.js"></script>
 <script>
     const terminal = document.getElementById('terminal');
     const commandInput = document.getElementById('command');
@@ -297,12 +300,15 @@ Hash: 0x${hex} | Base64: ${base64}
         }
     }
 
-    function runCollisionTest() {
+    async function runCollisionTest() {
         print('Running collision detection test...', 'highlight');
-        print('Searching for two different inputs with the same hash...');
-
         const seen = new Map();
-        const maxAttempts = 1_000_000;
+
+        const maxAttempts = 10_000_000;
+        const batchSize = 500_000;
+
+        print('Searching for two different inputs with the same hash... ', maxAttempts);
+
         let foundCollision = false;
 
         for (let i = 0; i < maxAttempts; i++) {
@@ -312,14 +318,26 @@ Hash: 0x${hex} | Base64: ${base64}
 
             if (seen.has(hex)) {
                 const existingInput = seen.get(hex);
+
                 print(`Collision found!`, 'success');
                 print(`  Input 1: ${existingInput}`);
                 print(`  Input 2: ${input}`);
                 print(`  Hash: 0x${hex}`);
+
                 foundCollision = true;
                 break;
             }
+
             seen.set(hex, input);
+
+            // Yield to browser every batch
+            if (i > 0 && i % batchSize === 0) {
+                print(`Done ${i / 1000}k`);
+
+                await new Promise(resolve => {
+                    setTimeout(resolve, 0);
+                });
+            }
         }
 
         if (!foundCollision) {
@@ -476,6 +494,11 @@ Hash: 0x${hex} | Base64: ${base64}
 
         // Also update on input for paste events
         commandInput.addEventListener('input', updateHashDisplay);
+
+        terminal.addEventListener("click", e=>{
+            commandInput.focus()
+        })
+
     }
 
     function processCommand(command) {
@@ -559,6 +582,7 @@ Hash: 0x${hex} | Base64: ${base64}
         initShell();
         commandInput.focus();
     };
+
 </script>
 </body>
 </html>

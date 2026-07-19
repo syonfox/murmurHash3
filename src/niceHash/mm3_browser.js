@@ -425,12 +425,13 @@ function bytesToHex(bytes) {
 }
 
 
-// murmurhash3.utils = {
-//     base64ToBytes,hexToBytes,utf8ToBytes,
-//     looksLikeBase64, looksLikeHex,
-//     normalizeToBytesAndKind
-// }
-window.mm3 = { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
+murmurhash3.utils = {
+    base64ToBytes,hexToBytes,utf8ToBytes,
+    looksLikeBase64, looksLikeHex,
+    normalizeToBytesAndKind, bytesToHex, hexToBase64
+}
+window.mm3 = { bufToHex, strToBuf, x64hash128, murmurhash3,
+    base64ToBytes,hexToBytes,utf8ToBytes,
     looksLikeBase64, looksLikeHex,
     normalizeToBytesAndKind, bytesToHex, hexToBase64
 };

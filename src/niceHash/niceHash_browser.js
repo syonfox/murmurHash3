@@ -1,11 +1,12 @@
-import { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
-  looksLikeBase64, looksLikeHex,
-  normalizeToBytesAndKind, bytesToHex, hexToBase64
-} from "./mm3.js";
-const mm3 = { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
-  looksLikeBase64, looksLikeHex,
-  normalizeToBytesAndKind, bytesToHex, hexToBase64
-}
+// import { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
+//   looksLikeBase64, looksLikeHex,
+//   normalizeToBytesAndKind, bytesToHex, hexToBase64
+// } from "./mm3.js";
+// const mm3 = { bufToHex, strToBuf, x64hash128, murmurhash3, base64ToBytes,hexToBytes,utf8ToBytes,
+//   looksLikeBase64, looksLikeHex,
+//   normalizeToBytesAndKind, bytesToHex, hexToBase64
+// }
+// Requires input mm3_browser
 /**
  *  THis function uses web crypto to generate a standards sha256 secure hash of an string.
  *
@@ -89,7 +90,7 @@ async function testNH() {
 
 }
 
-export {
+window.NiceHash = {
     testNH,
     parseHash,
     niceHash,generateSHA256,generateMM3128, mm3
